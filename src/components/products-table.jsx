@@ -28,7 +28,7 @@ export default function ProductsTable({ products }) {
   const paginatedProducts = products?.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(
-    adminProducts && adminProducts?.length / usersPerPage
+    adminProducts && adminProducts.length / usersPerPage
   );
 
   const AddToFeatured = (id) => {

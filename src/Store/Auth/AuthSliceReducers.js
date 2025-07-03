@@ -6,6 +6,7 @@ const config = {
   headers: {
     "Content-Type": "application/json", // Telling the server we're sending JSON data
   },
+  withCredentials: true,
 };
 
 // Async thunk for registering a user
@@ -15,7 +16,11 @@ const registerUser = createAsyncThunk(
     // console.log(userData); // Log the user data
 
     try {
-      const response = await axios.post("/api/auth/signup", userData, config);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/signup`,
+        userData,
+        config
+      );
       // console.log(response.data); // Log the response data
 
       return response.data;
@@ -39,7 +44,11 @@ const userLogin = createAsyncThunk(
     // console.log(userData);
 
     try {
-      const response = await axios.post("/api/auth/login", userData, config);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        userData,
+        config
+      );
       // console.log(data);
 
       return response.data;
@@ -60,10 +69,15 @@ const userLogin = createAsyncThunk(
 const loadUser = createAsyncThunk(
   "auth/loadUser",
   async (_, { rejectWithValue }) => {
-    // console.log(userData);
+    console.log("ggg");
 
     try {
-      const response = await axios.get("/api/auth/user/profile");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/auth/user/profile`,
+        {
+          withCredentials: true,
+        }
+      );
       // console.log(response.data);
 
       return response.data;
@@ -85,7 +99,9 @@ const userLogOut = createAsyncThunk("user/logOut", async () => {
   // console.log(userData);
 
   try {
-    const response = await axios.get("/api/auth/logout");
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/auth/logout`
+    );
     // console.log(response.data); // Log the response data
 
     return response.data;
@@ -104,7 +120,7 @@ const editUserProfile = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "/api/auth/users/me/edit-profile",
+        `${import.meta.env.VITE_API_URL}/auth/users/me/edit-profile`,
         userData,
         config
       );
@@ -130,7 +146,7 @@ const changeUserPassword = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        "/api/auth/users/me/change-password",
+        `${import.meta.env.VITE_API_URL}/auth/users/me/change-password`,
         userData,
         config
       );
@@ -159,7 +175,7 @@ const userDelete = createAsyncThunk(
     try {
       /*making api call with axios for getting user details from backend */
       const response = await axios.delete(
-        "/api/auth/users/me/delete-account",
+        `${import.meta.env.VITE_API_URL}/auth/users/me/delete-account`,
         config
       );
 
@@ -185,7 +201,7 @@ const forgotPassword = createAsyncThunk(
 
     try {
       const response = await axios.post(
-        "/api/auth/forgot-password",
+        `${import.meta.env.VITE_API_URL}/auth/forgot-password`,
         { email },
         config
       );
@@ -214,7 +230,9 @@ const getAllUsers = createAsyncThunk(
     // console.log(email);
 
     try {
-      const response = await axios.get("/api/auth/users");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/auth/users`
+      );
 
       // console.log(response?.data);
 
@@ -238,7 +256,9 @@ const getSingleUserDetails = createAsyncThunk(
     console.log(id);
 
     try {
-      const response = await axios.get(`/api/auth/user/${id}`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/auth/user/${id}`
+      );
       // console.log(response.data);
 
       return response.data;
@@ -261,7 +281,7 @@ const updateUserRole = createAsyncThunk(
 
     try {
       const response = await axios.put(
-        `/api/auth/user/update-role/${data?.id}`,
+        `${import.meta.env.VITE_API_URL}/auth/user/update-role/${data?.id}`,
         data,
         config
       );
@@ -289,7 +309,7 @@ const deleteUser = createAsyncThunk(
 
     try {
       const response = await axios.delete(
-        `/api/auth/user/delete-account/${id}`,
+        `${import.meta.env.VITE_API_URL}/auth/user/delete-account/${id}`,
         config
       );
 
@@ -315,7 +335,10 @@ const suspendUser = createAsyncThunk(
     // console.log(id);
 
     try {
-      const response = await axios.put(`/api/auth/user/suspend/${id}`, config);
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/auth/user/suspend/${id}`,
+        config
+      );
 
       // console.log(response?.data);
 
@@ -340,7 +363,7 @@ const unSuspendUser = createAsyncThunk(
 
     try {
       const response = await axios.put(
-        `/api/auth/user/un-suspend/${id}`,
+        `${import.meta.env.VITE_API_URL}/auth/user/un-suspend/${id}`,
         config
       );
 
